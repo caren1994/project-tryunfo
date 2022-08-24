@@ -13,6 +13,7 @@ class App extends React.Component {
     cardRare: 'normal',
     cardTrunfo: false,
     isSaveButtonDisabled: true,
+    data: [],
     // hasTrunfo:false,
   };
 
@@ -42,7 +43,19 @@ class App extends React.Component {
     });
   };
 
-  onSaveButtonClick = () => {};
+  onSaveButtonClick = (objetoinfo) => {
+    this.setState((prevstate) => ({
+      data: [...prevstate.data, objetoinfo],
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+
+    }));
+  };
 
   render() {
     const {
