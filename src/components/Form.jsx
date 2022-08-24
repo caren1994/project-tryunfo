@@ -2,6 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
+  superTrunfo = (hasTrunfo) => {
+    if (hasTrunfo === true) {
+      return (<p>Você já tem um Super Trunfo em seu baralho</p>);
+    }
+    const { cardTrunfo, onInputChange } = this.props;
+    return (
+      <>
+        <p>Super Trunfo</p>
+        <input
+          name="cardTrunfo"
+          type="checkbox"
+          value={ cardTrunfo }
+          onChange={ onInputChange }
+          data-testid="trunfo-input"
+        />
+      </>);
+  };
+
   render() {
     const {
       cardName,
@@ -15,8 +33,10 @@ class Form extends React.Component {
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick,
+      hasTrunfo,
+
     } = this.props;
-    // hasTrunfo=colocar na props depois
+
     return (
       <form>
         <label htmlFor="cardName">
@@ -93,19 +113,13 @@ class Form extends React.Component {
           </select>
         </label>
         <label htmlFor="cardTrunfo">
-          Super Trunfo
-          <input
-            name="cardTrunfo"
-            type="checkbox"
-            value={ cardTrunfo }
-            onChange={ onInputChange }
-            data-testid="trunfo-input"
-          />
+          {this.superTrunfo(hasTrunfo)}
         </label>
+
         <button
           type="button"
           disabled={ isSaveButtonDisabled }
-          onClick={ () => onSaveButtonClick(
+          onClick={ () => onSaveButtonClick({
             cardName,
             cardDescription,
             cardImage,
@@ -113,7 +127,8 @@ class Form extends React.Component {
             cardAttr1,
             cardAttr2,
             cardAttr3,
-          ) }
+            cardTrunfo,
+          }) }
           data-testid="save-button"
         >
           Salvar
@@ -131,6 +146,7 @@ Form.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
